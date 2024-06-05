@@ -10,7 +10,7 @@ function App() {
   const [editingText, setEditingText] = useState('');
   const [editingImage, setEditingImage] = useState(null);
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
