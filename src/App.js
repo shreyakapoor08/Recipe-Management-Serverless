@@ -153,7 +153,7 @@ function App() {
         </div>
       )}
       {loading && <div className="loading">Loading...</div>}
-      <ul className="todo-list">
+      {!loading && <ul className="todo-list">
         {items.map(item => (
           <li key={item.id} onClick={() => viewItemDetails(item)}>
             {item.image_url && <img src={item.image_url} alt={item.text} className="item-image" />}
@@ -165,6 +165,7 @@ function App() {
           </li>
         ))}
       </ul>
+    }
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
