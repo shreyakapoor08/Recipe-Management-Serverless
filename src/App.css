@@ -1,9 +1,11 @@
+/* Main app container styling */
 .App {
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
 }
 
+/* "Add Recipe" button styling */
 .add-btn {
   padding: 10px 20px;
   font-size: 16px;
@@ -15,6 +17,7 @@
   margin-bottom: 20px;
 }
 
+/* List of items styling */
 .todo-list {
   list-style-type: none;
   padding: 0;
@@ -23,6 +26,7 @@
   flex-wrap: wrap;
 }
 
+/* Individual list item styling */
 .todo-list li {
   display: flex;
   width: 60%;
@@ -35,12 +39,14 @@
   background-color: #f9f9f9;
 }
 
+/* Image styling within list items */
 .todo-list li img {
   max-width: 50px;
   margin-right: 10px;
   border-radius: 5px;
 }
 
+/* Delete and edit button styling */
 .delete, .edit {
   padding: 5px 10px;
   margin-left: 10px;
@@ -49,16 +55,19 @@
   cursor: pointer;
 }
 
+/* Delete button specific styling */
 .delete {
   background-color: #f44336;
   color: white;
 }
 
+/* Edit button specific styling */
 .edit {
   background-color: #2196F3;
   color: white;
 }
 
+/* Success and error message styling */
 .success-message,
 .error-message {
   padding: 10px;
@@ -67,25 +76,27 @@
   color: white;
 }
 
+/* Success message specific styling */
 .success-message {
   background-color: #4CAF50;
 }
 
+/* Error message specific styling */
 .error-message {
   background-color: #f44336;
 }
 
+/* Loading indicator styling */
 .loading {
   font-size: 18px;
   margin: 20px 0;
 }
 
+/* Modal dialog styling */
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  right: auto;
-  bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   background-color: white;
@@ -94,10 +105,12 @@
   width: 600px;
 }
 
+/* Modal overlay styling */
 .overlay {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+/* Input fields within modals */
 .modal-input {
   width: calc(100% - 20px);
   padding: 10px;
@@ -106,11 +119,13 @@
   border-radius: 5px;
 }
 
+/* Buttons within modals */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
 }
 
+/* Common modal button styling */
 .modal-btn {
   padding: 10px 20px;
   cursor: pointer;
@@ -119,16 +134,19 @@
   font-size: 14px;
 }
 
+/* Cancel button specific styling */
 .modal-btn.cancel {
   background-color: #f44336;
   color: white;
 }
 
+/* Other modal buttons styling */
 .modal-btn {
   background-color: #4CAF50;
   color: white;
 }
 
+/* Images within view modal */
 .view-image {
   max-width: 100%;
   height: auto;

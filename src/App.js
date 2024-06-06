@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import './App.css';
 
 function App() {
+  // Defining state variables
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [newImage, setNewImage] = useState(null);
@@ -16,10 +17,12 @@ function App() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [viewItem, setViewItem] = useState(null);
 
+  // Fetching items on component mount
   useEffect(() => {
     fetchItems();
   }, []);
 
+  // Clearing message after 3 seconds
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
@@ -29,6 +32,7 @@ function App() {
     }
   }, [message]);
 
+  // Fetching items from the API
   const fetchItems = async () => {
     setLoading(true);
     try {
@@ -42,10 +46,12 @@ function App() {
     }
   };
 
+  // Handling adding a new item
   const handleAddItem = async () => {
     if (newItem.trim() !== '') {
       setLoading(true);
       try {
+        // Converting image to base64 if provided
         const imageData = newImage ? await convertToBase64(newImage) : { base64: null, mimeType: null };
         const response = await fetch("https://oubnbeu2n2ngkqdytdurtgjobi0bukap.lambda-url.us-east-1.on.aws/", {
           method: 'POST',
@@ -58,6 +64,8 @@ function App() {
         });
         const data = await response.json();
         setItems([...items, data]);
+      
+        // Resetting input fields and closing the modal
         setNewItem('');
         setNewImage(null);
         setMessage('Item added successfully!');
@@ -71,6 +79,7 @@ function App() {
     }
   };
 
+  // Handling deleting an item
   const handleDeleteItem = async (id) => {
     setLoading(true);
     try {
@@ -88,9 +97,11 @@ function App() {
     }
   };
 
+  // Handling editing an item
   const handleEditItem = async (id) => {
     setLoading(true);
     try {
+      // Converting image to base64 if provided
       const imageData = editingImage ? await convertToBase64(editingImage) : { base64: null, mimeType: null };
       const response = await fetch("https://klynvkvtxgm2m6ghogovkckxae0uncyo.lambda-url.us-east-1.on.aws/", {
         method: 'PUT',
@@ -104,6 +115,8 @@ function App() {
       });
       const data = await response.json();
       setItems(items.map(item => (item.id === id ? data : item)));
+      
+      // Resetting input fields and closing the modal
       setEditingItem(null);
       setEditingText('');
       setEditingImage(null);
@@ -117,6 +130,7 @@ function App() {
     }
   };
 
+  // Starting the editing process
   const startEditing = (id, currentText, currentImage) => {
     setEditingItem(id);
     setEditingText(currentText);
@@ -124,11 +138,13 @@ function App() {
     setIsEditModalOpen(true);
   };
 
+  // Viewing item details
   const viewItemDetails = (item) => {
     setViewItem(item);
     setIsViewModalOpen(true);
   };
 
+  // Converting image file to base64
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -143,29 +159,39 @@ function App() {
     });
   };
 
+  console.log("items", items)
+
   return (
     <div className="App">
       <h1>Recipe Management</h1>
       <button className="add-btn" onClick={() => setIsModalOpen(true)}>Add Recipe</button>
+      
+      {/* Displaying message */}
       {message && (
         <div className={message.includes('successfully') ? 'success-message' : 'error-message'}>
           {message}
         </div>
       )}
+      
+      {/* Displaying loading indicator */}
       {loading && <div className="loading">Loading...</div>}
-      {!loading && <ul className="todo-list">
+      
+      {/* Displaying list of items */}
+      {!loading && items.length !== 0 ? <ul className="todo-list">
         {items.map(item => (
           <li key={item.id} onClick={() => viewItemDetails(item)}>
             {item.image_url && <img src={item.image_url} alt={item.text} className="item-image" />}
             <span>{item.text}</span>
             <div className='list-btns'>
-            <button className="delete" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id); }}>Delete</button>
-            <button className="edit" onClick={(e) => { e.stopPropagation(); startEditing(item.id, item.text, item.image_url); }}>Edit</button>
+              <button className="delete" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id); }}>Delete</button>
+              <button className="edit" onClick={(e) => { e.stopPropagation(); startEditing(item.id, item.text, item.image_url); }}>Edit</button>
             </div>
           </li>
         ))}
       </ul>
-    }
+      : <p>List Empty !!</p>}
+
+      {/* Modal for adding a new item */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -192,6 +218,8 @@ function App() {
           <button className="modal-btn cancel" onClick={() => setIsModalOpen(false)}>Cancel</button>
         </div>
       </Modal>
+
+      {/* Modal for editing an item */}
       <Modal
         isOpen={isEditModalOpen}
         onRequestClose={() => setIsEditModalOpen(false)}
@@ -217,6 +245,8 @@ function App() {
           <button className="modal-btn cancel" onClick={() => setIsEditModalOpen(false)}>Cancel</button>
         </div>
       </Modal>
+
+      {/* Modal for viewing item details */}
       <Modal
         isOpen={isViewModalOpen}
         onRequestClose={() => setIsViewModalOpen(false)}
